@@ -1,0 +1,62 @@
+pipeline {
+    agent any
+
+    environment {
+        DOCKER_IMAGE = 'vnexpress_data_warehouse:latest'
+        MONGO_URI = 'mongodb://mongo:27017'
+        MONGO_DATABASE = 'vnexpress'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Kiểm tra mã nguồn từ Git
+                git 'https://github.com/NguyenBich11/vnexpress_data_warehouse/tree/feature_TTTThao/vnexpress_data_warehouse'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                // Build Docker image
+                script {
+                    def customImage = docker.build(DOCKER_IMAGE)
+                }
+            }
+        }
+
+        stage('Run MongoDB Container') {
+            steps {
+                // Chạy container MongoDB
+                script {
+                    docker.image('mongo:latest').run('-d --name mongo -p 27017:27017')
+                }
+            }
+        }
+
+        stage('Run Scrapy Spider') {
+            steps {
+                // Chạy spider trong container
+                script {
+                    docker.image(DOCKER_IMAGE).run('-e MONGO_URI=${MONGO_URI} -e MONGO_DATABASE=${MONGO_DATABASE} vnexpress_data_warehouse crawl benhtimmach')
+                }
+            }
+        }
+
+        stage('Cleanup') {
+            steps {
+                // Dừng và xóa container MongoDB
+                script {
+                    sh 'docker stop mongo'
+                    sh 'docker rm mongo'
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            // Dọn dẹp ảnh Docker
+            sh 'docker rmi ${DOCKER_IMAGE}'
+        }
+    }
+}
