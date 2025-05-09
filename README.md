@@ -1,5 +1,38 @@
-## 📊 Insights from Media Spread Analysis Dashboard
+# Data Engineer VnExpress
 
+## Project Description:
+Developed an automated system to collect and analyze electronic newspaper data on disease interest levels,
+providing an interactive dashboard on Power BI. Utilized Docker, Selenium, MongoDB, PostgreSQL, and
+PySpark to automate the ETL process and analyze daily health information search trends.
+
+## Folder Structure:
+```
+Data_Engineer_VnExpress/
+├── vnexpress_data_warehouse/
+│   ├── __pycache__/
+│   ├── spiders/
+│   ├── .DS_Store
+│   ├── .dockerignore
+│   ├── CSV_to_Json.ipynb
+│   ├── DataFinal_CacBenh_cleaned.csv
+│   ├── Dockerfile
+│   ├── ETL.ipynb
+│   ├── Jenkinsfile
+│   ├── __init__.py
+│   ├── docker-compose.debug.yml
+│   ├── docker-compose.yml
+│   ├── items.py
+│   ├── middlewares.py
+│   ├── pipelines.py
+│   ├── requirements.txt
+│   ├── scrapy.cfg
+│   └── settings.py
+├── .DS_Store
+├── Final_product.pbix
+└── README.md
+```
+
+## 📊 Insights from Media Spread Analysis Dashboard
 ![Image 1](https://github.com/user-attachments/assets/36a78d4f-e3a4-4032-a3d4-6afc25cf97ca)
 
 - **Musculoskeletal** and **dermatological diseases** received the highest engagement (likes and comments), indicating strong public interest in these health topics.
